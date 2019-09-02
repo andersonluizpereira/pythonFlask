@@ -1,21 +1,13 @@
-from flask import Flask, request,redirect, url_for,abort
+from flask import Flask, render_template, request
 import json
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, template_folder ='templates')
 
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        if request.form['username'] == 'admin' and request.form['pass'] == 'admin':
-            return redirect(url_for('sucesso'), code=200)
-        else:
-            abort(401)
-
-    else:
-        abort(403)
-
-@app.route('/sucesso')
-def sucesso():
-    return 'sucesso'
+@app.route('/')
+def index():
+    x = 50
+    y = 10
+    query = request.args.to_dict()
+    return render_template('modelo.html', x=x, y=y, query=query)
 
 if __name__ == '__main__':
     app.run()
